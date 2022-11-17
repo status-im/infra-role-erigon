@@ -1,0 +1,8 @@
+---
+- name: Create JSON RPC wrapper script
+  template:
+    src: 'rpc.sh.j2'
+    dest: '{{ erigon_rpc_wrapper }}'
+    owner: 'root'
+    group: 'docker'
+    mode: 0750

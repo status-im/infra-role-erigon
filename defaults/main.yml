@@ -1,0 +1,83 @@
+---
+erigon_service_name: 'erigon'
+erigon_service_path: '/docker/{{ erigon_service_name }}'
+erigon_compose_path: '{{ erigon_service_path }}/docker-compose.yml'
+
+# Container config
+erigon_cont_tag: 'v2.30.0'
+erigon_cont_image: 'thorax/erigon:{{ erigon_cont_tag }}'
+erigon_cont_name: '{{ erigon_service_name }}'
+erigon_cont_data_vol: '{{ erigon_service_path }}/data'
+erigon_cont_keys_vol: '{{ erigon_service_path }}/keys'
+erigon_cont_stop_grace_period: '1m'
+# Container memory limits
+erigon_cont_mem_ratio: 0.6
+erigon_cont_mem_limit: '{{ (ansible_memtotal_mb * erigon_cont_mem_ratio|float) | int }}'
+
+# Available: mainnet, goerli, sepolia, kiln
+erigon_network_name: 'mainnet'
+# Maximum number of untrusted peers that can connect
+erigon_max_peers: 50
+# Any additional flags you want to provide
+erigon_extra_flags: []
+# Custom bootnodes
+erigon_bootnodes: []
+# Log Levels: trace, debug, info, warning, error
+erigon_log_level: 'info'
+erigon_log_json: true
+# Peer discovery protocol
+erigon_v5disc_enabled: true
+# Mining settings
+erigon_miner_enabled: false
+# Enode address
+erigon_enode_file: '{{ erigon_cont_keys_vol }}/enode'
+
+# DevP2P Port
+erigon_port: 30303
+# Address to advertise
+erigon_public_addr: '{{ ansible_host }}'
+# Enable metrics
+erigon_metrics_enabled: true
+erigon_metrics_port: 6060
+# RPC port of administration
+erigon_rpc_enabled: true
+erigon_rpc_addr: '127.0.0.1'
+erigon_rpc_port: 8545
+# Available: admin, erigon, debug, eth, les, miner, net, personal, rpc, txpool, web3, engine
+erigon_rcp_api: 'eth,net,erigon,admin,engine'
+# useful for linking containers
+erigon_rpc_extra_vhost: 'erigon'
+erigon_rpc_vhosts:
+  - 'localhost'
+  - '{{ erigon_cont_name }}'
+  - '{{ erigon_rpc_extra_vhost }}'
+  - '{{ hostname }}'
+  - '{{ hostname }}.wg'
+  - '{{ ansible_local.wireguard.vpn_ip }}'
+# Wrapper for easier RPC usage
+erigon_rpc_wrapper: '{{ erigon_service_path }}/rpc.sh'
+
+# AuthRPC Engine API
+erigon_authrpc_enabled: true
+erigon_authrpc_addr: '127.0.0.1'
+erigon_authrpc_port: 8551
+erigon_authrpc_vhosts: '{{ erigon_rpc_vhosts }}'
+#erigon_authrpc_jwtsecret: '0x64charHexEncodedSecretToken'
+erigon_authrpc_jwtsecret_file: '{{ erigon_cont_vol }}/keys/jwtsecret'
+
+# Consul config
+erigon_consul_enabled: true
+erigon_consul_service_name: 'erigon-{{ erigon_network_name }}'
+erigon_consul_scope: 'main'
+erigon_consul_default_tags:
+  - 'erigon'
+  - 'scope:{{ erigon_consul_scope }}'
+  - '{{ env }}.{{ stage }}'
+  - '{{ erigon_network_name }}'
+erigon_consul_extra_tags: []
+erigon_consul_tags: '{{ erigon_consul_default_tags + erigon_consul_extra_tags }}'
+
+# general container management
+compose_recreate: 'smart'
+compose_state: 'present'
+compose_restart: false

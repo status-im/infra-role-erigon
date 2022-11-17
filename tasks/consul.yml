@@ -1,0 +1,46 @@
+---
+- name: Create Consul service definitions
+  include_role: name=consul-service
+  vars:
+    consul_config_name: '{{ erigon_cont_name }}'
+    consul_services:
+      - id:   '{{ erigon_cont_name }}'
+        name: '{{ erigon_consul_service_name }}'
+        tags: '{{ erigon_consul_tags }}'
+        port: '{{ erigon_port }}'
+        address: '{{ ansible_host }}'
+        meta:
+          node_addr: '{{ node_info.json.result.id }}'
+          node_enode: '{{ node_info.json.result.enode }}'
+        checks:
+          - id: '{{ erigon_cont_name }}-status'
+            type: tcp
+            tcp: '127.0.0.1:{{ erigon_port }}'
+
+      - id:   '{{ erigon_cont_name }}-rpc'
+        name: '{{ erigon_consul_service_name }}-rpc'
+        tags: '{{ erigon_consul_tags + ["rpc"] }}'
+        port: '{{ erigon_rpc_port }}'
+        address: '{{ ansible_local.wireguard.address }}'
+        meta:
+          url: 'http://{{ ansible_local.wireguard.address }}:{{ erigon_rpc_port }}'
+        checks:
+          - id: '{{ erigon_cont_name }}-rpc-status'
+            type: 'script'
+            script: '{{ erigon_rpc_wrapper }} eth_syncing'
+            timeout: '5s'
+            failures_before_critical: 3
+
+      - id:   '{{ erigon_cont_name }}-authrpc'
+        name: '{{ erigon_consul_service_name }}-authrpc'
+        tags: '{{ erigon_consul_tags + ["authrpc", "engine"] }}'
+        port: '{{ erigon_authrpc_port }}'
+        address: '{{ ansible_local.wireguard.address }}'
+        meta:
+          url: 'http://{{ ansible_local.wireguard.address }}:{{ erigon_authrpc_port }}'
+        checks:
+          - id: '{{ erigon_cont_name }}-authrpc-status'
+            type: 'tcp'
+            tcp: 'localhost:{{ erigon_authrpc_port }}'
+            failures_before_critical: 3
+

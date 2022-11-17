@@ -1,0 +1,58 @@
+---
+version: '3.7'
+services:
+  erigon:
+    container_name: '{{ erigon_cont_name }}'
+    image: '{{ erigon_cont_image }}'
+    user: root
+    restart: 'always'
+    stop_grace_period: '{{ erigon_cont_stop_grace_period }}'
+    deploy:
+      resources:
+        limits:
+          memory: '{{ erigon_cont_mem_limit }}m'
+    ports:
+      - '{{ erigon_port }}:{{ erigon_port }}/tcp'
+      - '{{ erigon_port }}:{{ erigon_port }}/udp'
+      - '{{ erigon_metrics_port }}:{{ erigon_metrics_port }}/tcp'
+      - '{{ erigon_rpc_addr }}:{{ erigon_rpc_port }}:{{ erigon_rpc_port }}/tcp'
+      - '{{ erigon_authrpc_addr }}:{{ erigon_authrpc_port }}:{{ erigon_authrpc_port }}/tcp'
+    volumes:
+      - '{{ erigon_cont_data_vol }}:/data:rw'
+      - '{{ erigon_cont_keys_vol }}:/keys:rw'
+    entrypoint: '/usr/local/bin/erigon'
+    command: |
+      --chain={{ erigon_network_name }}
+      --v5disc={{ erigon_v5disc_enabled | bool | to_json }}
+      --mine={{ erigon_miner_enabled | bool | to_json }}
+      --metrics={{ erigon_metrics_enabled | bool | to_json }}
+{% if erigon_metrics_enabled %}
+      --metrics.addr=0.0.0.0
+      --metrics.port={{ erigon_metrics_port }}
+{% endif %}
+{% if erigon_rpc_enabled %}
+      --http
+      --http.addr=0.0.0.0
+      --http.port={{ erigon_rpc_port }}
+      --http.vhosts={{ erigon_rpc_vhosts | sort | join(",") }}
+      --http.api={{ erigon_rcp_api }}
+{% endif %}
+{% if erigon_authrpc_enabled %}
+      --authrpc.addr=0.0.0.0
+      --authrpc.port={{ erigon_authrpc_port }}
+      --authrpc.vhosts={{ erigon_authrpc_vhosts | sort | join(",") }}
+      --authrpc.jwtsecret=/keys/jwtsecret
+{% endif %}
+{% if (erigon_bootnodes|length) > 0 %}
+      --bootnodes="{{ erigon_bootnodes | sort | join(',') }}"
+{% endif %}
+      --log.console.json={{ erigon_log_json | bool | to_json }}
+      --log.console.verbosity={{ erigon_log_level }}
+      --maxpeers={{ erigon_max_peers }}
+      --port={{ erigon_port }}
+      --nat=extip:{{ erigon_public_addr }}
+      --allow-insecure-unlock
+      --datadir=/data
+{% for extra_flag in erigon_extra_flags %}
+      {{ extra_flag }}
+{% endfor %}

@@ -1,0 +1,37 @@
+---
+- name: Create service directories
+  file:
+    path: '{{ item }}'
+    owner: dockremap
+    group: docker
+    state: directory
+  with_items:
+    - '{{ erigon_service_name }}'
+    - '{{ erigon_cont_data_vol }}'
+    - '{{ erigon_cont_keys_vol }}'
+
+- name: Create Docker Compose file
+  template:
+    src: 'docker-compose.yml.j2'
+    dest: '{{ erigon_compose_path }}'
+    owner: 'dockremap'
+    group: 'docker'
+    mode: 0640
+
+# Take into account additional docker-compose.yml files.
+- name: Find all Docker Compose files
+  find:
+    paths: '{{ erigon_service_path }}'
+    patterns: 'docker-compose*.yml'
+    recurse: false
+  register: erigon_all_compose
+
+- name: Create Docker containers
+  docker_compose:
+    project_src: '{{ erigon_service_path }}'
+    files: '{{ erigon_all_compose.files | map(attribute="path") | list }}'
+    state: '{{ compose_state }}'
+    restarted: '{{ compose_restart }}'
+    recreate: '{{ compose_recreate | default("smart") }}'
+    pull: true
+    build: false

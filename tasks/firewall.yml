@@ -1,0 +1,14 @@
+---
+- name: Enable ports on firewall
+  iptables:
+    comment: '{{ erigon_cont_name }} {{ item }}'
+    jump: 'ACCEPT'
+    chain: 'SERVICES'
+    source: '0.0.0.0/0'
+    protocol: '{{ item }}'
+    destination_port: '{{ erigon_port | string }}'
+  with_items:
+    - tcp
+    - udp
+  notify:
+    - Save iptables rules
