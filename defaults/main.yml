@@ -31,6 +31,8 @@ erigon_v5disc_enabled: true
 erigon_miner_enabled: false
 # Enode address
 erigon_enode_file: '{{ erigon_cont_keys_vol }}/enode'
+# Mining rewards address
+#erigon_mining_ether_base: ~
 
 # DevP2P Port
 erigon_port: 30303

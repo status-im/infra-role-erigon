@@ -53,6 +53,7 @@ services:
       --nat=extip:{{ erigon_public_addr }}
       --allow-insecure-unlock
       --datadir=/data
+      --miner.etherbase={{ erigon_mining_ether_base | mandatory }}
 {% for extra_flag in erigon_extra_flags %}
       {{ extra_flag }}
 {% endfor %}
