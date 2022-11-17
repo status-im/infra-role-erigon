@@ -1,15 +1,4 @@
 ---
-- name: Create service directories
-  file:
-    path: '{{ item }}'
-    owner: dockremap
-    group: docker
-    state: directory
-  with_items:
-    - '{{ erigon_service_name }}'
-    - '{{ erigon_cont_data_vol }}'
-    - '{{ erigon_cont_keys_vol }}'
-
 - name: Create Docker Compose file
   template:
     src: 'docker-compose.yml.j2'

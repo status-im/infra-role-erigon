@@ -1,0 +1,27 @@
+---
+- name: Create service directories
+  file:
+    path: '{{ item }}'
+    owner: dockremap
+    group: docker
+    state: directory
+  with_items:
+    - '{{ erigon_service_name }}'
+    - '{{ erigon_cont_data_vol }}'
+    - '{{ erigon_cont_keys_vol }}'
+
+- name: Create JWT secret file
+  when: erigon_authrpc_jwtsecret is defined
+  copy:
+    dest: '{{ erigon_authrpc_jwtsecret_file }}'
+    content: '{{ erigon_authrpc_jwtsecret | mandatory }}'
+    owner: 'dockremap'
+    group: 'docker'
+
+- name: Create JSON RPC wrapper script
+  template:
+    src: 'rpc.sh.j2'
+    dest: '{{ erigon_rpc_wrapper }}'
+    owner: 'root'
+    group: 'docker'
+    mode: 0750

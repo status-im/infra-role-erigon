@@ -65,7 +65,7 @@ erigon_authrpc_addr: '127.0.0.1'
 erigon_authrpc_port: 8551
 erigon_authrpc_vhosts: '{{ erigon_rpc_vhosts }}'
 #erigon_authrpc_jwtsecret: '0x64charHexEncodedSecretToken'
-erigon_authrpc_jwtsecret_file: '{{ erigon_cont_vol }}/keys/jwtsecret'
+erigon_authrpc_jwtsecret_file: '{{ erigon_cont_keys_vol }}/jwtsecret'
 
 # Consul config
 erigon_consul_enabled: true
