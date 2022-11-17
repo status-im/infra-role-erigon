@@ -25,7 +25,9 @@ PAYLOAD="{
   \"params\": [${PARAMS}]
 }"
 
-curl -s -X POST \
+curl -X POST \
+    --silent \
+    --fail-with-body \
     -H "Content-type:application/json" \
     --data "${PAYLOAD}" \
     "${URL}" | \
