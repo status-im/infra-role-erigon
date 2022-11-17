@@ -18,8 +18,8 @@ erigon_cont_mem_limit: '{{ (ansible_memtotal_mb * erigon_cont_mem_ratio|float) |
 erigon_network_name: 'mainnet'
 # Maximum number of untrusted peers that can connect
 erigon_max_peers: 50
-# Any additional flags you want to provide
-erigon_extra_flags: []
+# Use dedicated consensus layer nnode
+erigon_external_consensus: true
 # Custom bootnodes
 erigon_bootnodes: []
 # Log Levels: trace, debug, info, warning, error
@@ -33,6 +33,8 @@ erigon_miner_enabled: false
 erigon_enode_file: '{{ erigon_cont_keys_vol }}/enode'
 # Mining rewards address
 #erigon_mining_ether_base: ~
+# Any additional flags you want to provide
+erigon_extra_flags: []
 
 # DevP2P Port
 erigon_port: 30303
