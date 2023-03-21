@@ -16,6 +16,8 @@ erigon_cont_mem_limit: '{{ (ansible_memtotal_mb * erigon_cont_mem_ratio|float) |
 
 # Available: mainnet, goerli, sepolia, kiln
 erigon_network_name: 'mainnet'
+# Pruning mode: h/history, r/receipts, t/transaction, c/call traces
+erigon_prune: 'disabled'
 # Maximum number of untrusted peers that can connect
 erigon_max_peers: 50
 # Use dedicated consensus layer nnode
@@ -31,8 +33,10 @@ erigon_v5disc_enabled: true
 erigon_miner_enabled: false
 # Enode address
 erigon_enode_file: '{{ erigon_cont_keys_vol }}/enode'
-# Mining rewards address
+# Mining rewards address or private key
 #erigon_mining_ether_base: ~
+#erigon_mining_private_key: ~
+erigon_mining_private_key_path: '{{ erigon_cont_keys_vol }}/sigfile'
 # Any additional flags you want to provide
 erigon_extra_flags: []
 

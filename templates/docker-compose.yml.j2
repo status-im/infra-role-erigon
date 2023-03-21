@@ -25,8 +25,16 @@ services:
       --chain={{ erigon_network_name }}
       --v5disc={{ erigon_v5disc_enabled | bool | to_json }}
       --externalcl={{ erigon_external_consensus | bool | to_json }}
-      --mine={{ erigon_miner_enabled | bool | to_json }}
       --metrics={{ erigon_metrics_enabled | bool | to_json }}
+      --mine={{ erigon_miner_enabled | bool | to_json }}
+{% if erigon_miner_enabled %}
+{% if erigon_mining_ether_base is defined %}
+      --miner.etherbase={{ erigon_mining_ether_base | mandatory }}
+{% elif erigon_mining_private_key %}
+      --miner.sigfile=/keys/sigfile
+{% endif %}
+{% endif %}
+      --prune={{ erigon_prune }}
 {% if erigon_metrics_enabled %}
       --metrics.addr=0.0.0.0
       --metrics.port={{ erigon_metrics_port }}
@@ -54,7 +62,6 @@ services:
       --nat=extip:{{ erigon_public_addr }}
       --allow-insecure-unlock
       --datadir=/data
-      --miner.etherbase={{ erigon_mining_ether_base | mandatory }}
 {% for extra_flag in erigon_extra_flags %}
       {{ extra_flag }}
 {% endfor %}
