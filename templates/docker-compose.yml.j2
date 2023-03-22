@@ -14,9 +14,15 @@ services:
     ports:
       - '{{ erigon_port }}:{{ erigon_port }}/tcp'
       - '{{ erigon_port }}:{{ erigon_port }}/udp'
+{% if erigon_metrics_enabled %}
       - '{{ erigon_metrics_port }}:{{ erigon_metrics_port }}/tcp'
+{% endif %}
+{% if erigon_rpc_enabled %}
       - '{{ erigon_rpc_addr }}:{{ erigon_rpc_port }}:{{ erigon_rpc_port }}/tcp'
+{% endif %}
+{% if erigon_authrpc_enabled %}
       - '{{ erigon_authrpc_addr }}:{{ erigon_authrpc_port }}:{{ erigon_authrpc_port }}/tcp'
+{% endif %}
     volumes:
       - '{{ erigon_cont_data_vol }}:/data:rw'
       - '{{ erigon_cont_keys_vol }}:/keys:rw'
