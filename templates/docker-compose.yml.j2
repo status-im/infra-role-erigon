@@ -36,6 +36,7 @@ services:
 {% endif %}
       --prune={{ erigon_prune }}
 {% if erigon_metrics_enabled %}
+      --metrics
       --metrics.addr=0.0.0.0
       --metrics.port={{ erigon_metrics_port }}
 {% endif %}
