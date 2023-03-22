@@ -44,3 +44,13 @@
             tcp: 'localhost:{{ erigon_authrpc_port }}'
             failures_before_critical: 3
 
+      - id:   '{{ erigon_cont_name }}-metrics'
+        name: '{{ erigon_consul_service_name }}-metrics'
+        tags: '{{ erigon_consul_tags + ["metrics"] }}'
+        port: '{{ erigon_metrics_port }}'
+        address: '{{ ansible_local.wireguard.address }}'
+        checks:
+          - id: '{{ erigon_cont_name }}-metrics-status'
+            type: 'tcp'
+            tcp: 'localhost:{{ erigon_metrics_port }}'
+            failures_before_critical: 3
