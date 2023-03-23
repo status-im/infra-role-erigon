@@ -52,6 +52,8 @@
         port:     '{{ erigon_metrics_port }}'
         address:  '{{ ansible_local.wireguard.address }}'
         disabled: '{{ not erigon_metrics_enabled }}'
+        meta:
+          container: '{{ erigon_service_name | mandatory }}'
         checks:
           - id: '{{ erigon_cont_name }}-metrics-status'
             type: 'tcp'
