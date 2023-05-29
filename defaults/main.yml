@@ -20,8 +20,6 @@ erigon_network_name: 'mainnet'
 erigon_prune: 'disabled'
 # Maximum number of untrusted peers that can connect
 erigon_max_peers: 50
-# Use dedicated consensus layer node
-erigon_internal_consensus: true
 # Custom bootnodes
 erigon_bootnodes: []
 # Log Levels: trace, debug, info, warning, error
