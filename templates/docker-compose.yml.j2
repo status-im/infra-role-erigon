@@ -65,7 +65,7 @@ services:
       --authrpc.jwtsecret=/keys/jwtsecret
 {% endif %}
       --v5disc={{ erigon_discovery_v5_enabled | bool | to_json }}
-      --nodiscover={{ not erigon_discovery_enabled | bool | to_json }}
+      --nodiscover={{ (not erigon_discovery_enabled) | bool | to_json }}
 {% if (erigon_bootnodes|length) > 0 %}
       --bootnodes="{{ erigon_bootnodes | sort | join(',') }}"
 {% endif %}
