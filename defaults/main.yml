@@ -27,7 +27,8 @@ erigon_log_level: 'info'
 erigon_log_json: true
 # Peer discovery protocol
 erigon_discovery_enabled: true
-erigon_v5disc_enabled: true
+erigon_discovery_v5_enabled: true
+erigon_discovery_dns_entries: []
 # Mining settings
 erigon_miner_enabled: false
 # Enode address
