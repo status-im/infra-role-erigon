@@ -30,7 +30,7 @@ services:
     command: |
       --chain={{ erigon_network_name }}
       --v5disc={{ erigon_v5disc_enabled | bool | to_json }}
-      --externalcl={{ erigon_external_consensus | bool | to_json }}
+      --internalcl={{ erigon_internal_consensus | bool | to_json }}
       --metrics={{ erigon_metrics_enabled | bool | to_json }}
       --mine={{ erigon_miner_enabled | bool | to_json }}
 {% if erigon_miner_enabled %}
