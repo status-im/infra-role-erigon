@@ -28,6 +28,7 @@ erigon_bootnodes: []
 erigon_log_level: 'info'
 erigon_log_json: true
 # Peer discovery protocol
+erigon_discovery_enabled: true
 erigon_v5disc_enabled: true
 # Mining settings
 erigon_miner_enabled: false
