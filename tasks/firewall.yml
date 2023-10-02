@@ -1,14 +1,24 @@
 ---
-- name: Enable ports on firewall
+- name: Enable TCP P2P ports on firewall
   iptables:
-    comment: '{{ erigon_cont_name }} {{ item }}'
+    comment: '{{ erigon_cont_name }} {{ item }}/tcp'
     jump: 'ACCEPT'
     chain: 'SERVICES'
     source: '0.0.0.0/0'
-    protocol: '{{ item }}'
-    destination_port: '{{ erigon_port | string }}'
-  with_items:
-    - tcp
-    - udp
+    protocol: 'tcp'
+    destination_port: '{{ item | string }}'
+  with_items: '{{ erigon_p2p_allowed_ports }}'
+  notify:
+    - Save iptables rules
+
+- name: Enable UDP P2P ports on firewall
+  iptables:
+    comment: '{{ erigon_cont_name }} {{ item }}/udp'
+    jump: 'ACCEPT'
+    chain: 'SERVICES'
+    source: '0.0.0.0/0'
+    protocol: 'udp'
+    destination_port: '{{ item | string }}'
+  with_items: '{{ erigon_p2p_allowed_ports }}'
   notify:
     - Save iptables rules

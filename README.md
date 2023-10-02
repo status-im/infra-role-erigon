@@ -17,6 +17,11 @@ It is also quite important to enable the right APIs for the right hostnames:
 erigon_rcp_api: 'eth,net,erigon,admin,engine'
 erigon_rpc_extra_vhost: 'erigon.example.org'
 ```
+One notable difference from other execution layer clients is use of multiple ports:
+```yaml
+erigon_port: 30303
+erigon_p2p_allowed_ports: [30303, 30304, 30305, 30306, 30307]
+```
 By default we create a [Consul service definition](https://www.consul.io/docs/agent/services.html):
 ```yaml
 erigon_consul_enabled: true
