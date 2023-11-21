@@ -27,6 +27,8 @@ PAYLOAD="{
 
 curl -X POST \
     --silent \
+    --max-time 5 \
+    --show-error \
     --fail-with-body \
     -H "Content-type:application/json" \
     --data "${PAYLOAD}" \
