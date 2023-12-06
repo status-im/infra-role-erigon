@@ -39,6 +39,7 @@ services:
       --nat=extip:{{ erigon_public_addr }}
       --allow-insecure-unlock
       --datadir=/data
+      --db.size.limit=8TB
       --metrics={{ erigon_metrics_enabled | bool | to_json }}
       --mine={{ erigon_miner_enabled | bool | to_json }}
 {% if erigon_miner_enabled %}
