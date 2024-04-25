@@ -60,7 +60,8 @@ services:
       --http.addr=0.0.0.0
       --http.port={{ erigon_rpc_port }}
       --http.vhosts={{ erigon_rpc_vhosts | sort | join(",") }}
-      --http.api={{ erigon_rcp_api }}
+      --http.api={{ erigon_rpc_api }}
+      --rpc.returndata.limit={{ erigon_rpc_returndata_limit }}
 {% endif %}
 {% if erigon_authrpc_enabled %}
       --authrpc.addr=0.0.0.0
