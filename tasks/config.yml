@@ -18,14 +18,6 @@
     owner: 'dockremap'
     group: 'docker'
 
-- name: Create mining private key file
-  when: erigon_mining_private_key is defined
-  copy:
-    dest: '{{ erigon_mining_private_key_path }}'
-    content: '{{ erigon_mining_private_key | mandatory }}'
-    owner: 'dockremap'
-    group: 'docker'
-
 - name: Create JSON RPC wrapper script
   template:
     src: 'rpc.sh.j2'

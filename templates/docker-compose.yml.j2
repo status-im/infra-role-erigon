@@ -41,13 +41,8 @@ services:
       --datadir=/data
       --db.size.limit=8TB
       --metrics={{ erigon_metrics_enabled | bool | to_json }}
-      --mine={{ erigon_miner_enabled | bool | to_json }}
-{% if erigon_miner_enabled %}
 {% if erigon_mining_ether_base is defined %}
       --miner.etherbase={{ erigon_mining_ether_base | mandatory }}
-{% elif erigon_mining_private_key %}
-      --miner.sigfile=/keys/sigfile
-{% endif %}
 {% endif %}
       --prune={{ erigon_prune }}
 {% if erigon_metrics_enabled %}

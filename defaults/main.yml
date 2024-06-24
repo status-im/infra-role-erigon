@@ -29,14 +29,10 @@ erigon_log_json: true
 erigon_discovery_enabled: true
 erigon_discovery_v5_enabled: true
 erigon_discovery_dns_entries: []
-# Mining settings
-erigon_miner_enabled: false
 # Enode address
 erigon_enode_file: '{{ erigon_cont_keys_vol }}/enode'
 # Mining rewards address or private key
 #erigon_mining_ether_base: ~
-#erigon_mining_private_key: ~
-erigon_mining_private_key_path: '{{ erigon_cont_keys_vol }}/sigfile'
 # Any additional flags you want to provide
 erigon_extra_flags: []
 
