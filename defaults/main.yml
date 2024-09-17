@@ -60,8 +60,8 @@ erigon_rpc_vhosts:
   - 'localhost'
   - '{{ erigon_cont_name }}'
   - '{{ erigon_rpc_extra_vhost }}'
-  - '{{ hostname }}'
-  - '{{ hostname }}.wg'
+  - '{{ inventory_hostname }}'
+  - '{{ inventory_hostname }}.wg'
   - '{{ ansible_local.wireguard.vpn_ip }}'
 # Wrapper for easier RPC usage
 erigon_rpc_wrapper: '{{ erigon_service_path }}/rpc.sh'
