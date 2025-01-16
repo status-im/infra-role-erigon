@@ -4,8 +4,8 @@ erigon_service_path: '/docker/{{ erigon_service_name }}'
 erigon_compose_path: '{{ erigon_service_path }}/docker-compose.yml'
 
 # Container config
-erigon_cont_tag: '2.60.8'
-erigon_cont_image: 'thorax/erigon:{{ erigon_cont_tag }}'
+erigon_cont_tag: 'v2.61.0'
+erigon_cont_image: 'erigontech/erigon:{{ erigon_cont_tag }}'
 erigon_cont_name: '{{ erigon_service_name }}'
 erigon_cont_data_vol: '{{ erigon_service_path }}/data'
 erigon_cont_keys_vol: '{{ erigon_service_path }}/keys'
