@@ -48,7 +48,7 @@ erigon_rpc_enabled: true
 erigon_rpc_addr: '127.0.0.1'
 erigon_rpc_port: 8545
 # Available: admin, erigon, debug, eth, les, miner, net, personal, rpc, txpool, web3, engine
-erigon_rpc_api: 'eth,net,erigon,admin,engine'
+erigon_rpc_api: 'eth,net,erigon,admin,engine,web3'
 erigon_rpc_returndata_limit: 100000
 # useful for linking containers
 erigon_rpc_extra_vhost: 'erigon'
