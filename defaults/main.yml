@@ -4,7 +4,7 @@ erigon_service_path: '/docker/{{ erigon_service_name }}'
 erigon_compose_path: '{{ erigon_service_path }}/docker-compose.yml'
 
 # Container config
-erigon_cont_tag: 'v2.61.3'
+erigon_cont_tag: 'v3.0.2'
 erigon_cont_image: 'erigontech/erigon:{{ erigon_cont_tag }}'
 erigon_cont_name: '{{ erigon_service_name }}'
 erigon_cont_data_vol: '{{ erigon_service_path }}/data'
@@ -16,8 +16,8 @@ erigon_cont_mem_limit: '{{ (ansible_memtotal_mb * erigon_cont_mem_ratio|float) |
 
 # Available: mainnet, goerli, sepolia, kiln, holesky
 erigon_network_name: 'mainnet'
-# Pruning mode: h/history, r/receipts, t/transaction, c/call traces
-erigon_prune: 'disabled'
+# Pruning mode: full, archive, minimal
+erigon_prune: 'minimal'
 # Maximum number of untrusted peers that can connect
 erigon_max_peers: 50
 # Custom bootnodes

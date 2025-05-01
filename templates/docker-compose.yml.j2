@@ -29,6 +29,7 @@ services:
       - '{{ erigon_cont_keys_vol }}:/keys:rw'
     entrypoint: '/usr/local/bin/erigon'
     command: |
+      --externalcl
       --chain={{ erigon_network_name }}
       --maxpeers={{ erigon_max_peers }}
       --log.console.json={{ erigon_log_json | bool | to_json }}
@@ -43,7 +44,7 @@ services:
 {% if erigon_mining_ether_base is defined %}
       --miner.etherbase={{ erigon_mining_ether_base | mandatory }}
 {% endif %}
-      --prune={{ erigon_prune }}
+      --prune.mode={{ erigon_prune }}
 {% if erigon_metrics_enabled %}
       --metrics
       --metrics.addr=0.0.0.0
