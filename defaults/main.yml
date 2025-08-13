@@ -21,7 +21,7 @@ erigon_prune: 'minimal'
 # Maximum number of untrusted peers that can connect
 erigon_max_peers: 50
 # Maximum amount of gas for transactions in a single block
-erigon_gas_limit: 36000000
+erigon_gas_limit: 45000000
 # Custom bootnodes
 erigon_bootnodes: []
 # Log Levels: trace, debug, info, warning, error
