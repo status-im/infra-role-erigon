@@ -6,10 +6,8 @@ services:
     user: root
     restart: 'always'
     stop_grace_period: '{{ erigon_cont_stop_grace_period }}'
-    deploy:
-      resources:
-        limits:
-          memory: '{{ erigon_cont_mem_limit }}m'
+    mem_limit: '{{ erigon_cont_mem_limit }}m'
+    memswap_limit: '{{ erigon_cont_swap_limit }}m'
     ports:
 {% for port in (erigon_p2p_allowed_ports + [erigon_port]) | unique %}
       - '{{ port }}:{{ port }}/tcp'
