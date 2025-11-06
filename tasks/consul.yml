@@ -18,6 +18,7 @@
         meta:
           node_addr:  '{{ node_info.json.result.id }}'
           node_enode: '{{ node_info.json.result.enode }}'
+          network:    '{{ erigon_network_name }}'
           version:    '{{ erigon_cont_tag | regex_replace("^v", "") }}'
         checks:
           - id: '{{ erigon_cont_name }}-status'
@@ -31,7 +32,8 @@
         address:  '{{ ansible_local.wireguard.address }}'
         disabled: '{{ not erigon_rpc_enabled }}'
         meta:
-          url: 'http://{{ ansible_local.wireguard.address }}:{{ erigon_rpc_port }}'
+          network: '{{ erigon_network_name }}'
+          url:     'http://{{ ansible_local.wireguard.address }}:{{ erigon_rpc_port }}'
           version: '{{ erigon_cont_tag | regex_replace("^v", "") }}'
         checks:
           - id: '{{ erigon_cont_name }}-rpc-status'
@@ -46,7 +48,8 @@
         address:  '{{ ansible_local.wireguard.address }}'
         disabled: '{{ not erigon_authrpc_enabled }}'
         meta:
-          url: 'http://{{ ansible_local.wireguard.address }}:{{ erigon_authrpc_port }}'
+          network: '{{ erigon_network_name }}'
+          url:     'http://{{ ansible_local.wireguard.address }}:{{ erigon_authrpc_port }}'
           version: '{{ erigon_cont_tag | regex_replace("^v", "") }}'
         checks:
           - id: '{{ erigon_cont_name }}-authrpc-status'
@@ -60,8 +63,9 @@
         address:  '{{ ansible_local.wireguard.address }}'
         disabled: '{{ not erigon_metrics_enabled }}'
         meta:
+          network:   '{{ erigon_network_name }}'
           container: '{{ erigon_service_name | mandatory }}'
-          version: '{{ erigon_cont_tag | regex_replace("^v", "") }}'
+          version:   '{{ erigon_cont_tag | regex_replace("^v", "") }}'
         checks:
           - id: '{{ erigon_cont_name }}-metrics-status'
             type: 'tcp'

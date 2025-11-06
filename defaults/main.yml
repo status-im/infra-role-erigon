@@ -75,7 +75,7 @@ erigon_authrpc_jwtsecret_file: '{{ erigon_cont_keys_vol }}/jwtsecret'
 
 # Consul config
 erigon_consul_enabled: true
-erigon_consul_service_name: 'erigon-{{ erigon_network_name }}'
+erigon_consul_service_name: 'erigon'
 erigon_consul_config_name: '{{ erigon_service_name | replace("-", "_") }}'
 erigon_consul_check_disabled: false
 erigon_consul_check_interval: '60s'
