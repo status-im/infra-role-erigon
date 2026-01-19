@@ -19,6 +19,8 @@ erigon_cont_swap_limit: '{{ erigon_cont_mem_limit|int + (ansible_swaptotal_mb * 
 erigon_network_name: 'mainnet'
 # Pruning mode: full, archive, minimal
 erigon_prune: 'minimal'
+# Limit DB size
+erigon_db_size_limit: 1TB
 # Maximum number of untrusted peers that can connect
 erigon_max_peers: 50
 # Maximum amount of gas for transactions in a single block

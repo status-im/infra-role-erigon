@@ -37,7 +37,7 @@ services:
       --nat=extip:{{ erigon_public_addr }}
       --allow-insecure-unlock
       --datadir=/data
-      --db.size.limit=8TB
+      --db.size.limit={{ erigon_db_size_limit }}
       --miner.gaslimit={{ erigon_gas_limit | to_json }}
       --metrics={{ erigon_metrics_enabled | bool | to_json }}
 {% if erigon_mining_ether_base is defined %}
