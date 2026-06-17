@@ -19,6 +19,9 @@ services:
 {% if erigon_rpc_enabled %}
       - '{{ erigon_rpc_addr }}:{{ erigon_rpc_port }}:{{ erigon_rpc_port }}/tcp'
 {% endif %}
+{% if erigon_websocket_enabled %}
+      - '{{ erigon_websocket_addr }}:{{ erigon_websocket_port }}:{{ erigon_websocket_port }}/tcp'
+{% endif %}
 {% if erigon_authrpc_enabled %}
       - '{{ erigon_authrpc_addr }}:{{ erigon_authrpc_port }}:{{ erigon_authrpc_port }}/tcp'
 {% endif %}
@@ -56,6 +59,10 @@ services:
       --http.vhosts={{ erigon_rpc_vhosts | sort | join(",") }}
       --http.api={{ erigon_rpc_api }}
       --rpc.returndata.limit={{ erigon_rpc_returndata_limit }}
+{% endif %}
+{% if erigon_websocket_enabled %}
+      --ws
+      --ws.port={{ erigon_websocket_port }}
 {% endif %}
 {% if erigon_authrpc_enabled %}
       --authrpc.addr=0.0.0.0

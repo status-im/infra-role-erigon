@@ -74,6 +74,10 @@ erigon_authrpc_port: 8551
 erigon_authrpc_vhosts: '{{ erigon_rpc_vhosts }}'
 #erigon_authrpc_jwtsecret: '0x64charHexEncodedSecretToken'
 erigon_authrpc_jwtsecret_file: '{{ erigon_cont_keys_vol }}/jwtsecret'
+# WebSocket API
+erigon_websocket_enabled: false
+erigon_websocket_port: 8546
+erigon_websocket_addr: '127.0.0.1'
 
 # Consul config
 erigon_consul_enabled: true
