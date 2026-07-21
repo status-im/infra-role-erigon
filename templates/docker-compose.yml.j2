@@ -9,10 +9,8 @@ services:
     mem_limit: '{{ erigon_cont_mem_limit }}m'
     memswap_limit: '{{ erigon_cont_swap_limit }}m'
     ports:
-{% for port in (erigon_p2p_allowed_ports + [erigon_port]) | unique %}
-      - '{{ port }}:{{ port }}/tcp'
-      - '{{ port }}:{{ port }}/udp'
-{% endfor %}
+      - '{{ erigon_port }}:{{ erigon_port }}/tcp'
+      - '{{ erigon_port }}:{{ erigon_port }}/udp'
 {% if erigon_metrics_enabled %}
       - '{{ erigon_metrics_port }}:{{ erigon_metrics_port }}/tcp'
 {% endif %}
@@ -36,7 +34,6 @@ services:
       --log.console.json={{ erigon_log_json | bool | to_json }}
       --log.console.verbosity={{ erigon_log_level }}
       --port={{ erigon_port }}
-      --p2p.allowed-ports={{ erigon_p2p_allowed_ports | join(",") }}
       --nat=extip:{{ erigon_public_addr }}
       --allow-insecure-unlock
       --datadir=/data
