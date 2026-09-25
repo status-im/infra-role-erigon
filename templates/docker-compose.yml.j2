@@ -6,8 +6,10 @@ services:
     user: root
     restart: 'always'
     stop_grace_period: '{{ erigon_cont_stop_grace_period }}'
+{% if erigon_cont_mem_limit_enabled %}
     mem_limit: '{{ erigon_cont_mem_limit }}m'
     memswap_limit: '{{ erigon_cont_swap_limit }}m'
+{% endif %}
     ports:
       - '{{ erigon_port }}:{{ erigon_port }}/tcp'
       - '{{ erigon_port }}:{{ erigon_port }}/udp'
